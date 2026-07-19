@@ -1,0 +1,56 @@
+{
+  "@context": {
+    "etzhayyim": "https://resources.etzhayyim.com/etzhayyim-project-resources/id/",
+    "schema": "https://schema.org/",
+    "dodaf": "https://resources.etzhayyim.com/etzhayyim-project-resources/id/DM2/"
+  },
+  "@type": "etzhayyim:Project",
+  "@id": "https://resources.etzhayyim.com/etzhayyim-project-drone/id/Project/etzhayyim-project-drone",
+  "schema:name": "etzhayyim-project-drone",
+  "schema:description": "Autonomous drone operation AI agent platform. Matrix protocol for command/video/telemetry, Connect gRPC for queries. MAVLink v2 integration via Native Go bridge.",
+  "schema:url": "https://drone.etzhayyim.com",
+  "dodaf:capability": [
+    {
+      "@type": "dodaf:Capability",
+      "schema:name": "Drone Fleet Management",
+      "schema:description": "Register, monitor, and manage drone fleet with Matrix-based real-time status and telemetry."
+    },
+    {
+      "@type": "dodaf:Capability",
+      "schema:name": "Autonomous Mission Planning",
+      "schema:description": "AI agent-driven mission planning with weather, airspace, and battery optimization via LLM Tool Use."
+    },
+    {
+      "@type": "dodaf:Capability",
+      "schema:name": "MAVLink Flight Control",
+      "schema:description": "Real-time drone control via MAVLink v2 protocol through Native Go bridge service."
+    },
+    {
+      "@type": "dodaf:Capability",
+      "schema:name": "Live Video Streaming",
+      "schema:description": "WebRTC video relay with Matrix VoIP signaling (m.call.*) for live drone camera feeds."
+    },
+    {
+      "@type": "dodaf:Capability",
+      "schema:name": "Geofence Enforcement",
+      "schema:description": "GeoJSON-based flight restriction zones with automatic RTL/LAND on violation."
+    }
+  ],
+  "dodaf:performer": [
+    {
+      "@type": "dodaf:Performer",
+      "schema:name": "drone-main-component",
+      "schema:description": "SpinApp at dr0n3x8k.etzhayyim.com — UI + Connect gRPC Command/Query facade + Matrix event handling"
+    },
+    {
+      "@type": "dodaf:Performer",
+      "schema:name": "drone-mission-planner",
+      "schema:description": "SpinApp at msnp1an2.etzhayyim.com — AI mission planner with LLM Tool Use for autonomous flight planning"
+    },
+    {
+      "@type": "dodaf:Performer",
+      "schema:name": "drone-bridge",
+      "schema:description": "Native Go service — MAVLink v2 protocol handler, telemetry ingest, WebRTC video relay, geofence enforcement"
+    }
+  ]
+}

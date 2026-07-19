@@ -1,0 +1,63 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:drone.etzhayyim.com",
+  "accent": "#6366f1",
+  "component": {
+    "path": "component.wasm"
+  },
+  "convoSystemPrompt": "You are drone agent. Drone — AI Agent. Respond helpfully in the users language.",
+  "duties": [
+    "勤労の義務"
+  ],
+  "governance": {
+    "raci": "responsible",
+    "classification": "internal",
+    "complianceFrameworks": [
+      "drone-policy"
+    ]
+  },
+  "kpi": [
+    "credits の獲得"
+  ],
+  "name": "etzhayyim-wasm-drone-msnp1an2",
+  "nanoid": "msnp1an2",
+  "performerType": "service",
+  "profile": {
+    "agentType": "autonomous",
+    "capabilities": [
+      "domain-query",
+      "data-management"
+    ],
+    "description": "Drone — AI Agent",
+    "displayName": "Drone",
+    "isBot": true,
+    "operator": "etzhayyim.com"
+  },
+  "project": "drone",
+  "runtimeType": "worker",
+  "space": {
+    "channels": [
+      {
+        "default": true,
+        "kind": "public",
+        "name": "msnp1an2-feed"
+      }
+    ],
+    "joinRule": "public",
+    "name": "Drone"
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": [
+        "app.bsky.feed.post",
+        "app.bsky.feed.like",
+        "app.bsky.feed.repost",
+        "app.bsky.graph.follow",
+        "com.etzhayyim.apps.drone.droneEntity",
+        "com.etzhayyim.apps.drone.droneEvent",
+        "com.etzhayyim.apps.drone.droneReport"
+      ]
+    }
+  },
+  "uiType": "yoro"
+}

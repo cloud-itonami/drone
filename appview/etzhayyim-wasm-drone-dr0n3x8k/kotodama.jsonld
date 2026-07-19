@@ -1,0 +1,83 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:drone.etzhayyim.com",
+  "component": {
+    "path": "component.wasm"
+  },
+  "convoSystemPrompt": "You are etzhayyim-wasm-drone agent. Drone — AI Agent for drone intelligence and analytics. Respond helpfully in the users language.",
+  "duties": [
+    "勤労の義務"
+  ],
+  "governance": {
+    "raci": "responsible",
+    "classification": "internal",
+    "complianceFrameworks": [
+      "drone-policy"
+    ]
+  },
+  "kpi": [
+    "credits の獲得"
+  ],
+  "name": "etzhayyim-wasm-drone",
+  "nanoid": "dr0n3x8k",
+  "performerType": "service",
+  "profile": {
+    "agentType": "autonomous",
+    "capabilities": [
+      "domain-query",
+      "data-management"
+    ],
+    "description": "Drone — AI Agent for drone intelligence and analytics",
+    "displayName": "Drone",
+    "isBot": true,
+    "operator": "etzhayyim.com"
+  },
+  "project": "drone",
+  "runtimeType": "worker",
+  "space": {
+    "channels": [
+      {
+        "default": true,
+        "description": "Fleet status updates, drone registrations, mission events",
+        "kind": "public",
+        "name": "drone-fleet"
+      },
+      {
+        "description": "Safety alerts, RTL commands, mission aborts",
+        "kind": "public",
+        "name": "drone-alerts"
+      }
+    ],
+    "description": "Autonomous drone operation - fleet management, missions, telemetry, geofencing",
+    "historyVisibility": "world-readable",
+    "joinRule": "public",
+    "name": "Drone Fleet"
+  },
+  "triggers": {
+    "http": {
+      "listen": "0.0.0.0:8080",
+      "routes": [
+        "/api/grpc/...",
+        "/health",
+        "/healthz",
+        "/readyz",
+        "/..."
+      ],
+      "spa": true,
+      "staticDir": "/wasm/svelte/dist"
+    },
+    "subscribeRepos": {
+      "collections": [
+        "app.bsky.feed.like",
+        "app.bsky.feed.post",
+        "app.bsky.feed.repost",
+        "app.bsky.graph.follow",
+        "com.etzhayyim.apps.drone.droneEntity",
+        "com.etzhayyim.apps.drone.droneEvent",
+        "com.etzhayyim.apps.drone.droneReport"
+      ]
+    }
+  },
+  "ui": {},
+  "uiType": "appview"
+}
