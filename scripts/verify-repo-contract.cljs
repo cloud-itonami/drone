@@ -79,8 +79,12 @@
                 " — either a source file was added/removed, or a new file needs"
                 " listing in :identity :allowed-additions")))
 (when-not bytes-ok?
+  ;; Only blame an edit when the file count still matches. If the count moved too,
+  ;; the bytes moved with it and naming a cause here would be a guess.
   (println (str "FAIL  byte total drifted by " (- actual-bytes declared-bytes)
-                " — a migrated file was edited since extraction")))
+                (if count-ok?
+                  " — a migrated file was edited since extraction"
+                  " — consistent with the file-count drift above"))))
 
 (if (and count-ok? bytes-ok?)
   (do (println "PASS  migrated payload matches migration.edn")
