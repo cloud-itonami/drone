@@ -1,0 +1,92 @@
+#!/usr/bin/env nbb
+;; Verify that the migrated payload recorded in migration.edn is still intact.
+;;
+;; This repo was extracted from `etzhayyim/root` (60-apps/etzhayyim-project-drone).
+;; `migration.edn` records what the extraction moved — a file count and a byte
+;; total — plus the short list of files the extraction was allowed to *add*.
+;; Everything else in the tree must still weigh exactly what it weighed at the
+;; source revision.
+;;
+;; Sizes are read from the committed blobs (`git cat-file`), not from the working
+;; tree, so an uncommitted edit does not make the contract look broken and a
+;; committed edit cannot hide behind a clean checkout.
+;;
+;; Run:  nbb scripts/verify-repo-contract.cljs
+;; Exit: 0 = payload intact, 1 = payload drifted (or contract unreadable).
+
+(ns verify-repo-contract
+  (:require ["node:child_process" :as cp]
+            [clojure.edn :as edn]
+            [clojure.string :as str]))
+
+(defn- sh [cmd]
+  (str (cp/execSync cmd #js {:encoding "utf8" :maxBuffer (* 64 1024 1024)})))
+
+(def root (str/trim (sh "git rev-parse --show-toplevel")))
+
+(def contract
+  (try
+    (edn/read-string (sh (str "git -C " root " show HEAD:migration.edn")))
+    (catch :default e
+      (println "FAIL  migration.edn is not readable at HEAD:" (.-message e))
+      (js/process.exit 1))))
+
+(def declared-count (get-in contract [:source :tracked-files]))
+(def declared-bytes (get-in contract [:source :bytes]))
+(def allowed (set (get-in contract [:identity :allowed-additions])))
+
+(when (or (nil? declared-count) (nil? declared-bytes))
+  (println "FAIL  migration.edn declares no :source :tracked-files / :bytes")
+  (js/process.exit 1))
+
+;; "<mode> <sha> <stage>\t<path>" per tracked file, at HEAD.
+(def tracked
+  (->> (str/split-lines (sh (str "git -C " root " ls-tree -r HEAD")))
+       (remove str/blank?)
+       (map (fn [line]
+              (let [[meta path] (str/split line #"\t" 2)
+                    [_ _ sha] (str/split meta #"\s+")]
+                {:sha sha :path path})))))
+
+(def blob-sizes
+  (let [shas (str/join "\n" (map :sha tracked))
+        out  (str (cp/execSync (str "git -C " root " cat-file --batch-check='%(objectname) %(objectsize)'")
+                               #js {:input shas :encoding "utf8" :maxBuffer (* 64 1024 1024)}))]
+    (into {} (for [line (str/split-lines out)
+                   :when (not (str/blank? line))
+                   :let [[sha size] (str/split (str/trim line) #"\s+")]]
+               [sha (js/parseInt size 10)]))))
+
+(def payload   (remove #(allowed (:path %)) tracked))
+(def additions (filter #(allowed (:path %)) tracked))
+
+(def actual-count (count payload))
+(def actual-bytes (reduce + 0 (map #(get blob-sizes (:sha %) 0) payload)))
+
+(def count-ok? (= actual-count declared-count))
+(def bytes-ok? (= actual-bytes declared-bytes))
+
+(println (str "migrated payload   " actual-count " files / " actual-bytes " bytes"))
+(println (str "migration.edn says " declared-count " files / " declared-bytes " bytes"))
+(println (str "post-migration additions (" (count additions) "): "
+              (str/join ", " (sort (map :path additions)))))
+
+;; A file present in the tree but absent from :allowed-additions is counted as
+;; payload, so an unrecorded addition shows up as a count/byte mismatch rather
+;; than passing silently.
+(when-not count-ok?
+  (println (str "FAIL  file count drifted by " (- actual-count declared-count)
+                " — either a source file was added/removed, or a new file needs"
+                " listing in :identity :allowed-additions")))
+(when-not bytes-ok?
+  ;; Only blame an edit when the file count still matches. If the count moved too,
+  ;; the bytes moved with it and naming a cause here would be a guess.
+  (println (str "FAIL  byte total drifted by " (- actual-bytes declared-bytes)
+                (if count-ok?
+                  " — a migrated file was edited since extraction"
+                  " — consistent with the file-count drift above"))))
+
+(if (and count-ok? bytes-ok?)
+  (do (println "PASS  migrated payload matches migration.edn")
+      (js/process.exit 0))
+  (js/process.exit 1))
