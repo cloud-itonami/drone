@@ -1,4 +1,9 @@
 {:schema "etzhayyim.migration/v1"
  :source {:repository "etzhayyim/root" :revision "afe5f1d995162277d2fb98f762705b53f9f695fd" :path "60-apps/etzhayyim-project-drone" :tree "930e629f431df91744dd9f9017fdd4b89867f4e0" :tracked-files 14 :bytes 15537}
  :destination {:repository "etzhayyim/com-etzhayyim-app-drone"}
- :identity {:allowed-additions ["README.edn" "migration.edn"]}}
+ :identity {:allowed-additions [".gitignore"
+                                "README.edn"
+                                "README.md"
+                                "docs/operator-quickstart.md"
+                                "migration.edn"
+                                "scripts/verify-repo-contract.cljs"]}}
