@@ -96,7 +96,7 @@ files totalling 15,537 bytes, plus a named list of files the extraction was allo
 add. That claim is arithmetic, so it can be checked rather than believed:
 
 ```bash
-nbb scripts/verify-repo-contract.cljk
+kbb --backend sci scripts/verify-repo-contract.cljk
 ```
 
 It reads sizes from the committed blobs, subtracts the recorded additions, and exits
