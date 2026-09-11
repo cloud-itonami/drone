@@ -24,7 +24,7 @@ you want to reproduce a failure.
 ## 1. Check the repo is still what it says it is
 
 ```bash
-nbb scripts/verify-repo-contract.cljk
+kbb --backend sci scripts/verify-repo-contract.cljk
 ```
 
 ```
