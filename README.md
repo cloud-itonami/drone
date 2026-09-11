@@ -32,7 +32,7 @@ appview/etzhayyim-wasm-drone-msnp1an2/
   kotodama.jsonld                component descriptor for the mission planner.
                                  Descriptor only — no code migrated for this one.
 README.edn / migration.edn       machine-readable identity and the extraction record
-scripts/verify-repo-contract.cljs
+scripts/verify-repo-contract.cljk
                                  checks the migrated payload is still intact
 ```
 
@@ -96,7 +96,7 @@ files totalling 15,537 bytes, plus a named list of files the extraction was allo
 add. That claim is arithmetic, so it can be checked rather than believed:
 
 ```bash
-nbb scripts/verify-repo-contract.cljs
+nbb scripts/verify-repo-contract.cljk
 ```
 
 It reads sizes from the committed blobs, subtracts the recorded additions, and exits

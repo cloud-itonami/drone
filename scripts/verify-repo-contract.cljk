@@ -11,7 +11,7 @@
 ;; tree, so an uncommitted edit does not make the contract look broken and a
 ;; committed edit cannot hide behind a clean checkout.
 ;;
-;; Run:  nbb scripts/verify-repo-contract.cljs
+;; Run:  nbb scripts/verify-repo-contract.cljk
 ;; Exit: 0 = payload intact, 1 = payload drifted (or contract unreadable).
 
 (ns verify-repo-contract
