@@ -24,13 +24,13 @@ you want to reproduce a failure.
 ## 1. Check the repo is still what it says it is
 
 ```bash
-nbb scripts/verify-repo-contract.cljs
+nbb scripts/verify-repo-contract.cljk
 ```
 
 ```
 migrated payload   14 files / 15537 bytes
 migration.edn says 14 files / 15537 bytes
-post-migration additions (6): .gitignore, README.edn, README.md, docs/operator-quickstart.md, migration.edn, scripts/verify-repo-contract.cljs
+post-migration additions (6): .gitignore, README.edn, README.md, docs/operator-quickstart.md, migration.edn, scripts/verify-repo-contract.cljk
 PASS  migrated payload matches migration.edn
 ```
 

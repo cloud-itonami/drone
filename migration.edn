@@ -6,4 +6,4 @@
                                 "README.md"
                                 "docs/operator-quickstart.md"
                                 "migration.edn"
-                                "scripts/verify-repo-contract.cljs"]}}
+                                "scripts/verify-repo-contract.cljk"]}}
