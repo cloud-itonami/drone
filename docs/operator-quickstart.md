@@ -59,7 +59,7 @@ step goes red, which is the intended behaviour, not a bug to route around.
    which parts of the design are still only design.
 2. `docs/260313-drone-agent-architecture.md` — transport split, why each drone is a
    Matrix user, room structure, the data-flow diagram, and the safety model.
-3. `CLAUDE.md` — the same architecture in summary, plus the five Arrow table schemas
+3. `AGENTS.md` — the same architecture in summary, plus the five Arrow table schemas
    (`drone_registry`, `drone_mission`, `drone_telemetry`, `drone_geofence`,
    `drone_flight_log`) with their mandatory RLS columns.
 4. `PROJECT.jsonld` — the DoDAF view: five capabilities against three performers.
