@@ -19,7 +19,7 @@ tense, and will reasonably conclude that some of it exists. It does not. The
 ## Layout
 
 ```
-CLAUDE.md                        architecture summary + the five Arrow table schemas
+AGENTS.md                        architecture summary + the five Arrow table schemas
 docs/260313-drone-agent-architecture.md
                                  the design: transport split, room structure,
                                  data flow, safety model
@@ -60,7 +60,7 @@ not an estimate.
 | `component.wasm` (`kotodama.jsonld` → `component.path`) | Not in the tree. No `.wasm` file exists in this repo. |
 | `msnp1an2` — the AI mission planner | Descriptor only. No source, no scaffold, no prompt — one 1.4 KB JSON-LD file. |
 | The Svelte appview builds | **It does not.** Three independent blockers, below. |
-| Queries go over "XRPC" (CLAUDE.md, architecture doc) / "Connect gRPC" (PROJECT.jsonld) | Both vocabularies are present and neither is implemented. The descriptor routes name `/api/grpc/...`. Treat the query transport as undecided. |
+| Queries go over "XRPC" (AGENTS.md, architecture doc) / "Connect gRPC" (PROJECT.jsonld) | Both vocabularies are present and neither is implemented. The descriptor routes name `/api/grpc/...`. Treat the query transport as undecided. |
 
 ### The appview does not build
 
